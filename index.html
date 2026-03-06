@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./themify-icons/themify-icons.css">
+    <title>Đăng ký xem ban nhạc</title>
+    <style>
+        /* (Phần CSS của bạn giữ nguyên, mình thu gọn lại để bạn dễ nhìn) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .navbar__heading { height:46px; position: fixed; top: 0; z-index: 1; background-color: #000; width: 100%; display:flex; justify-content: space-between; align-items: center; }
+        .navbar__heading-list { display: flex; list-style: none; }  
+        .navbar__heading-list li { display: inline-block; }
+        .navbar__heading-list a { text-decoration: none; padding: 12px 24px; color: #fff; font-family: "Lato", sans-serif; display: block; font-size: 15px; line-height: 1.5; text-transform: uppercase; }
+        .navbar__heading-list a:hover { color: #000; background-color: #ccc; }
+        .navbar__heading-icon { padding: 12px 24px; cursor: pointer; }
+        .navbar__heading-icon:hover { background-color: #f44336; }
+        .navbar__heading-icon .ti-search { color:#fff; height: 46px; }
+        .mobile-menu-btn { display:none; position: absolute; top: 0; right: 0; padding: 0 21px; cursor: pointer; }
+        .mobile-menu-btn i { line-height: 46px; color: #fff; font-size: 20px; }
+        .mobile-menu-btn:hover { background-color: #ccc; }
+        .mobile-menu-btn:hover i { color: #000; }
+        .nav-more { position: relative; }
+        .content__inside-more { display: none; position: absolute; top: 100%; left: 0; background-color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); list-style: none; z-index: 10; padding: 0 !important; margin: 0 !important; }
+        .nav-more:hover .content__inside-more { display: block; }
+        .nav-more:hover > a { color: #000; background-color: #ccc; }
+        .content__inside-more li { width: 100%; padding: 0; }
+        .content__inside-more li a { color: #000 !important; padding: 8px 16px; display: block; width: 100%; box-sizing: border-box; line-height: 1.5; text-align: left; text-transform: none; text-decoration: none; }
+        .content__inside-more li a:hover { background-color: #ccc; color: #000; }
+        .heading__content { margin-top: 46px; display:grid; width: 100%; }
+        .heading__content-img { grid-area: 1/1; position: relative; opacity: 0; animation: slideShow 9s infinite; }
+        .heading__content-img img { width: 100%; display: block; height: 100%; object-fit: cover; }
+        .heading__content-text { position: absolute; bottom: 48px; text-align: center; width: 100%; color: #fff; }
+        .heading__content-text h3 { font-family: "Segoe UI", Arial, sans-serif; font-weight: 400; margin: 10px 0; height: 36px; font-size: 24px; }
+        .heading__content-text p { font-weight: bolder; height: 18px; font-size: 15px; font-family: "Lato", sans-serif; }
+        .slide-1 { animation-delay: 0s; } .slide-2 { animation-delay: 3s; } .slide-3 { animation-delay: 6s; }
+        @keyframes slideShow { 0% {opacity: 1;} 33% {opacity: 1;} 34% { opacity: 0;} 100% {opacity: 0;} }
+        .second__content { text-align: center; font-family: "Lato", sans-serif; margin-left: auto; margin-right: auto; max-width: 800px; padding: 64px 16px; }
+        .heading__content-text { width: 100%; }
+        .second__content-text h1 { color:#000; font-size: 30px; font-family: "Segoe UI", Arial, sans-serif; font-weight: 400; letter-spacing: 4px; margin: 10px 0; text-transform: uppercase; }
+        .second__content-text p { text-align: justify !important; font-weight: 400; font-size: 15px; line-height: 1.5; margin: 15px 0; display: block; }
+        .second__content-text i { color:#898282; font-size: 15px; font-weight: 500; display: block; margin: 15px 0; }
+        .third__content-img { width: 100%; display: flex; justify-content: space-around; padding:32px 8px; }
+        .third__content-img label { display: block; font-size: 15px; margin: 15px 0; font-family:'Lato',sans-serif; }
+        .third__content-img img { width: 60%; border-radius: 4px; margin-bottom: 16px; }
+        .third__content-member { text-align: center !important; }
+        .content__resign-tour { text-align: center; background-color: #000; color: #fff; height: auto; position: relative; padding: 64px 16px; margin-left: auto; margin-right: auto; }
+        .content__head { max-width: 800px; margin-left: auto; margin-right: auto; padding-left: 16px; padding-right: 16px; width: 100%; }
+        .content__head h1 { font-family: "Lato", sans-serif; margin-left: auto; margin-right: auto; margin: 10px 0; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; }
+        .content__head i { color:#898282; font-size: 15px; font-weight: 400; display: block; margin: 15px 0; }
+        .content__research { display: block; width: 100%; margin-left: auto; margin-right: auto; max-width: 800px; }
+        .content__research ul { list-style: none; background-color: #fff; text-align: left; }
+        .content__research li { border-bottom: 0.5px solid #ccc; color: #757575 !important; padding: 8px 16px; padding-right:0; }
+        .content__research li:last-child { border-bottom: none; }
+        .content__sold-out { background-color:#f44336; color: #fff; margin: 0 0 0 16px; padding: 0 0 8px; text-align: center; display: inline-block; padding-left: 8px; padding-right: 8px; height: 23px; }
+        .content__buy-ticket { margin-top: auto; }
+        .content__buy-ticket li { background-color: #fff; font-size: 15px; padding: 8px 16px; }
+        .content__round { background-color: #000; padding: 0 8px; margin: 0 16px 0 0; border-radius: 50%; float: right; font-size:15px; padding-left: 8px; padding-right: 8px; color: #fff; border: none; }
+        .content__ticket-img { display: flex; padding: 32px 8px; }
+        .content__ticket-img img { display:inline; margin: 0 -16px; width:245px; height:184px; }
+        .place-list { max-width: 800px; margin: 32px auto 8px; display: flex; }
+        .place-item { width: 33.33333%; padding: 0; margin:0 0 16px; display: block; padding-left: 8px; }
+        .place-img { width: 100%; display: block; }
+        .place-img:hover { opacity: 0.6; }
+        .place-body { background-color: #fff; padding: 16px; color: #000; text-align: left; }
+        .place-heading { font-weight: 600; margin: 15px 0; }
+        .place-time { margin: 15px 0; color: #757575; }
+        .place-desc { margin: 15px 0; line-height: 1.4; }
+        .place-buy-btn { color: #fff; background-color: #000; padding: 8px 16px; display: inline-block; border: none; cursor: pointer; }
+        .place-buy-btn:hover { opacity: 0.4; }
+        .content__contact { text-align: center; padding: 64px 16px; font-size: 15px; margin-left: 0; margin-right: 0; width: 100%; }
+        .content__contact-inside h1 { margin: 10px 0; font-size: 30px; font-family: 'Segoe UI', sans-serif,Arial; font-weight: 400; letter-spacing: 5px; line-height:45px; }
+        .content__contact-inside i { font-family: 'Lato',sans-serif; line-height:23px; color: #898282; }
+        .contact__body { display: flex; justify-content: space-between; padding: 32px 0; max-width: 800px; width: 100%; align-items: center; margin-left: auto; margin-right: auto; }
+        .contact__information { width: 48%; font-size: 18px; line-height: 1.5; text-align: left; }
+        .contact__information p { margin-bottom: 8px; }
+        .contact__information i { width: 30px; display: inline-block; }
+        .contact__input { width: 48%; text-align: left; }
+        .contact__row { display: flex; margin: 0 -8px; margin-bottom: 8px; }
+        .contact__col { padding: 0 8px; width: 50%; }
+        .contact__name, .contact__email, .contact__Message { width: 100%; padding: 10px; border: 1px solid #ccc; display: block; }
+        .contact__row-two { margin-bottom: 16px; }
+        .contact__col-two input { width: 100%; padding: 10px; border: 1px solid #ccc; }
+        .contact__click { background-color: #000; color: #fff; border: none; padding: 10px 16px; float: right; cursor: pointer; text-transform: uppercase; }
+        .contact__click:hover { background-color: #ccc; color: #000; }
+        .map { display: block; }
+        .map img { width: 100%; }
+        footer { text-align: center; color: #898282; padding: 64px 16px; }
+        .web-contact { font-size: 24px; font-weight: 600; }
+        .link-contact { font-size: 18px; margin: 15px 0; font-weight: 500; }
+        .link-contact a { line-height: 1.6; color: #898282; }
+        .web-contact i:hover { opacity: 0.5; }
+        @media (max-width: 740px){
+            .navbar__heading { overflow: hidden; display: block; height: 46px; }
+            .navbar__heading-icon { display: none; }
+            .mobile-menu-btn { display: block; position: absolute; top: 0; right: 0; cursor: pointer; }
+            .navbar__heading-list { display: block; }
+            .navbar__heading-list ul { display: block; }
+            .navbar__heading-list a { display: inline-block; }
+            .navbar__heading-list >ul >li { display: block; width: 100%; }
+            .navbar__heading-list > ul >li:first-child { display: inline-block; width: auto; }
+            .navbar__heading-list > ul > li:first-child >a { display: block; width: auto; }
+            .third__content-img { display: block; }
+            .third__content-member { width: 100%; margin-bottom: 32px; }
+            .third__content-img img { width: 60%; margin-bottom: 16px; }
+            .place-list { display: block; margin-left: 0; margin-right: 0; }
+            .place-item { width: 100%; margin-bottom: 16px; }
+            .contact__body { display: block; }
+            .contact__information { width: 100%; margin-bottom: 32px; }
+            .contact__input { width: 100%; margin-bottom: 10px; padding-bottom: 10px; }
+            .contact__row { display: block; margin: 0; }
+            .contact__col { width: 100%; padding: 0; margin-bottom: 8px; }
+            .contact__name, .contact__email, .contact__Message { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar__heading">
+        <div class="navbar__heading-list">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#band">Band</a></li>
+                <li><a href="#tour">Tour</a></li>
+                <li><a href="#contact">Contact</a></li>
+
+                <li class="nav-more"><a href="#">More <i class="ti-angle-down"></i></a>
+                    <ul class="content__inside-more ">
+                        <li><a href="#">Merchandise</a></li>
+                        <li><a href="#">Extra</a></li>
+                        <li><a href="#">Media</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="navbar__heading-icon">
+            <i class="ti-search"></i>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu-btn">
+            <i class="ti-menu"></i>
+        </div>
+    </nav>
+
+    <div class="heading__content">
+        <div class="heading__content-img slide-1">
+            <img src="./chicago.jpg" alt="">
+            <div class="heading__content-text">
+                <h3>Chicago</h3>
+                <p>Thank you, Chicago - A night we won't forget</p>
+            </div>
+        </div>
+        <div class="heading__content-img slide-2">
+            <img src="./NewYork.jpg" alt="">
+            <div class="heading__content-text">
+                <h3>New York</h3>
+                <p>The atmosphere in New York is lorem ipsum.</p>
+            </div>
+        </div>
+        <div class="heading__content-img slide-3">
+            <img src="./LosAngeles.jpg" alt="">
+            <div class="heading__content-text" >
+                <h3>Los Angeles</h3>
+                <p>We had the best time playing at Venice Beach!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="band" class="second__content">
+        <div class="second__content-text">
+            <h1>The Band</h1>
+            <i>We love music</i>
+            <p>We have created a fictional band website. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div class="third__content-img">
+            <div class="third__content-member">
+                <label for="">Name</label>
+                <img src="./ThanhVien.jpg" alt="">
+            </div>
+            <div class="third__content-member">
+                <label for="">Name</label>
+                <img src="./ThanhVien.jpg" alt="">
+            </div>
+            <div class="third__content-member">
+                <label for="">Name</label>
+                <img src="./ThanhVien.jpg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div id="tour" class="content__resign-tour">
+        <div class="content__head">
+            <h1>Tour Dates</h1>
+            <i>Remember to book your tickets!</i>
+        </div>
+        <div class="content__research">
+            <ul>
+                <li>September <span class="content__sold-out">Sold out</span></li>
+                <li>October <span class="content__sold-out">Sold out</span></li>
+                <li>November <span class="content__round">3</span></li>
+            </ul>
+        </div>
+    
+        <div class="place-list">
+            <div class="place-item">
+                <img src="./newyork1 .jpg" alt="" class="place-img">
+                <div class="place-body">
+                    <h3 class="place-heading">New York</h3>
+                    <p class="place-time">Fri 27 Nov 2016</p>
+                    <p class="place-desc">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                    <button class="place-buy-btn">Buy Tickets</button>
+                </div>
+            </div>
+
+            <div class="place-item">
+                <img src="./paris.jpg" alt="" class="place-img">
+                <div class="place-body">
+                    <h3 class="place-heading" >Paris</h3>
+                    <p class="place-time">Sat 28 Nov 2016</p>
+                    <p  class="place-desc">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                    <button class="place-buy-btn">Buy Tickets</button>
+                </div>
+            </div>
+
+            <div class="place-item">
+                <img src="./sanfran.jpg" alt="" class="place-img" >
+                <div class="place-body">
+                    <h3 class="place-heading">San Francisco</h3>
+                    <p class="place-time" >Sun 29 Nov 2016</p>
+                    <p class="place-desc">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                    <button class="place-buy-btn">Buy Tickets</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div id="contact" class="content__contact">
+        <div class="content__contact-inside">
+            <h1>CONTACT</h1>
+            <i>Fan?Drop a note!</i>
+        </div>
+
+        <div class="contact__body">
+            <div class="contact__information">
+                <p><i class=" ti-location-pin"></i> Chicago, US</p>
+                <p><i class="ti-mobile "></i> Phone: +00 151515</p> 
+                <p><i class="ti-email"></i>Email: mail@mail.com</p>
+            </div>
+            <div class="contact__input">
+                <form action="">
+                    <div class="contact__row">
+                        <div class="contact__col">
+                            <input type="text" class="contact__name" placeholder="Name" required>
+                        </div>
+                        <div class="contact__col">
+                            <input type="email" class="contact__email" placeholder="Email" required>
+                        </div>
+                    </div>
+
+                    <div class="contact__row-two">
+                        <div class="contact__col-two">
+                            <input type="text" class="contact__Message" placeholder="Message" required>
+                        </div>
+                    </div>
+                    
+                    <button class="contact__click">Send</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="map">
+            <img src="./map.jpg" alt="">
+        </div>
+    </div>
+
+    <footer>
+        <div class="web-contact">
+            <i class="ti-facebook"></i>
+            <i class="ti-instagram"></i>
+            <i class="ti-google"></i>
+            <i class="ti-yahoo"></i>
+            <i class="ti-linkedin"></i>
+            <i class="ti-twitter-alt"></i>
+        </div>
+        <p class="link-contact">Powered by <a href="">w3.css</a></p>
+    </footer>
+
+    <script>
+        // 1. Đóng/Mở Mobile Menu
+        const header = document.querySelector('.navbar__heading');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const headerHeight = header.clientHeight;
+
+        // Khi click vào nút menu
+        mobileMenu.onclick = function() {
+            const isClosed = header.clientHeight === headerHeight;
+            if (isClosed) {
+                header.style.height = 'auto'; // Mở menu
+            } else {
+                header.style.height = null; // Đóng menu
+            }
+        }
+
+        // Tự động đóng menu khi chọn các mục (Band, Tour, Contact)
+        const menuItems = document.querySelectorAll('.navbar__heading-list li a[href*="#"]');
+        for (let i = 0; i < menuItems.length; i++) {
+            const menuItem = menuItems[i];
+            
+            menuItem.onclick = function(event) {
+                const isParentMenu = this.nextElementSibling && this.nextElementSibling.classList.contains('content__inside-more');
+                if (isParentMenu) {
+                    event.preventDefault(); // Bỏ qua nếu là nút "More"
+                } else {
+                    header.style.height = null; // Ẩn menu đi
+                }
+            }
+        }
+
+        // 2. Xử lý Form Submit gọi Backend
+        document.querySelector("form").addEventListener("submit", async function(e){
+            e.preventDefault();
+
+            const name = document.querySelector(".contact__name").value;
+            const email = document.querySelector(".contact__email").value;
+            const message = document.querySelector(".contact__Message").value;
+
+            try {
+                const res = await fetch("http://localhost:3000/contact",{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        name,
+                        email,
+                        message
+                    })
+                });
+
+                const data = await res.json();
+                alert(data.message);
+                
+            } catch (error) {
+                console.error("Lỗi:", error);
+                alert("Không thể kết nối đến server. Vui lòng kiểm tra lại backend (NodeJS) đang chạy ở cổng 3000.");
+            }
+        });
+        
+async function loadSongs(){
+    const res = await fetch("https://my-backend-9jm5.onrender.com/songs");
+    const songs = await res.json();
+
+    const list = document.getElementById("song-list");
+    list.innerHTML = "";
+
+    songs.forEach(song=>{
+        const li = document.createElement("li");
+        li.innerText = song.name + " - " + song.artist;
+        list.appendChild(li);
+    });
+}
+
+loadSongs();
+
+    </script>
+</body>
+</html>
